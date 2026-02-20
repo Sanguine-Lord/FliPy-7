@@ -17,3 +17,9 @@ class Deck():
     def deal_card(self):
         top_card = self.current_deck.pop()
         return top_card
+    
+    def deck_check(self):
+        if self.current_deck == []:
+            self.create_deck()
+        else:
+            pass
