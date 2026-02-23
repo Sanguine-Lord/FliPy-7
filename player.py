@@ -6,6 +6,7 @@ class Player:
     round_active: bool
     player_name: str
     hand: list = field(default_factory=list)
+    s_hand: list = field(default_factory=list)
 
 
     def get_action(self):
@@ -21,7 +22,7 @@ class Player:
 
 class Human_Player(Player):
     def get_action(self):
-        decision = input("What would you like to do? 'h' for Hit and 's' for Stand")
+        decision = input("What would you like to do? 'h' for Hit and 's' for Stand\n")
         match decision:
             case "h":
                 return "hit"
