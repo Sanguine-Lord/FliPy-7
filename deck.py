@@ -1,6 +1,5 @@
 from dataclasses import *
 from random import *
-from player import *
 
 @dataclass
 class Deck():
@@ -17,14 +16,14 @@ class Deck():
             self.current_deck.append("F")
             self.current_deck.append("D")
             self.current_deck.append("S")
-        for i in range(0, 6):
-            self.current_deck.append("+2")
-            self.current_deck.append("+4")
-            self.current_deck.append("+6")
-            self.current_deck.append("+8")
-            self.current_deck.append("+10")
-            self.current_deck.append("x2")
+        self.current_deck.append("+2")
+        self.current_deck.append("+4")
+        self.current_deck.append("+6")
+        self.current_deck.append("+8")
+        self.current_deck.append("+10")
+        self.current_deck.append("x2")
         shuffle(self.current_deck)
+        print(self.current_deck)
 
     def deal_card(self):
         top_card = self.current_deck.pop()
