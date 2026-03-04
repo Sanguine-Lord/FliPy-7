@@ -3,7 +3,7 @@ from deck import *
 from player import *
 
 def get_card_effect(game_state: GameState, player: Player):
-    game_state.games_deck.deck_check()
+    game_state.game_deck.deck_check()
     top_card = game_state.game_deck.deal_card()
     if isinstance(top_card, int):
         player.hand.append(top_card)

@@ -1,5 +1,6 @@
 from player import *
 from cardeffects import *
+from game import *
 
 def run_round(game_state, active_players):
         for player in active_players:
@@ -12,6 +13,8 @@ def run_round(game_state, active_players):
                         print("Hit! Best of luck!")
                         get_card_effect(game_state, player) # get a card from the top, and do what it says.
                         print(player.hand)
+                        print(player.s_hand)
+                        round_reset(player.flip_7_check(game_state.game_deck), active_players) # check to see if the player has 7 cards in hand.
                         player.round_active = player.player_bust_check() # check to see if the player bust
                         match player.round_active:
                             case True: # player didn't bust, remains an active player
@@ -25,4 +28,14 @@ def run_round(game_state, active_players):
                         player.clear_hand(game_state.game_deck)
                         player.round_active = False
         active_players = [p for p in game_state.player_list.values() if p.round_active]
-        return active_players          
+        return active_players     
+
+def round_reset(check: bool, active_players):
+    if check == True:
+        for player in active_players:
+            if player.round_active == True:
+                player.round_active = False
+                player.update_score
+                player.clear_hand
+    else:
+        pass

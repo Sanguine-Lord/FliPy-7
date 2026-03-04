@@ -48,6 +48,17 @@ class Player:
         deck.discard_pile.extend(self.s_hand)
         self.hand.clear()
         self.s_hand.clear()
+
+    def flip_7_check(self, deck):
+        if len(self.hand) == 7:
+            print("FLIP 7! The round is over and you have been awarded a +15 point bonus!")
+            self.update_score()
+            self.score += 15
+            self.clear_hand(deck)
+            self.round_active = False
+            return True
+        else:
+            pass
     
 
 class Human_Player(Player):
