@@ -1,5 +1,6 @@
 from dataclasses import *
 from deck import Deck
+from UiManager import *
 
 @dataclass
 class Player:
@@ -18,7 +19,6 @@ class Player:
                 if self.hand[i] == self.hand[j]:
                     for x in range(0, len(self.s_hand)):
                         if self.s_hand[x] == "S":
-                            print("Second chance consumed! Be more careful from now on!")
                             self.s_hand[x] = ""
                             self.hand.remove(self.hand[i])
                             return True
