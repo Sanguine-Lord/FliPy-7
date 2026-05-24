@@ -11,10 +11,13 @@ class UI:
                                 "player_5": {"y": 22, "colour": bt.term.white}})
 
     def text_prompt(self, prompt) -> str:
+        bt.clear_area(0, 25)
         response = bt.get_input(0, 25, f"{prompt}: ")
         return str(response)
 
+
     def int_prompt(self, prompt) -> int:
+        bt.clear_area(0, 25)
         response = bt.get_input(0, 25, f"{prompt}: ")
         
         try:
@@ -38,8 +41,9 @@ class UI:
         bt.draw_text(0 , y + 2, f"Current Special Cards: {player.s_hand}", colour)        
 
         bt.clear_area(0 , y + 3)
-        bt.draw_text(0 , y + 3, f"Status:")
+        bt.draw_text(0 , y + 3, f"Status: {player.round_active}")
 
     def game_update(self, text, colour):
+        bt.clear_area(0, 25)
         bt.draw_text(0, 25, text, colour)
 

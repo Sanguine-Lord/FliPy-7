@@ -1,6 +1,7 @@
 from dataclasses import *
 from deck import Deck
 from UiManager import *
+import blessedterm as bt
 
 @dataclass
 class Player:
@@ -49,9 +50,9 @@ class Player:
         self.hand.clear()
         self.s_hand.clear()
 
-    def flip_7_check(self, deck):
+    def flip_7_check(self, deck, ui):
         if len(self.hand) == 7:
-            print("FLIP 7! The round is over and you have been awarded a +15 point bonus!")
+            ui.game_update("FLIP 7! The round is over and you have been awarded a +15 point bonus!",bt.term.green)
             self.update_score()
             self.score += 15
             self.clear_hand(deck)
@@ -62,8 +63,8 @@ class Player:
     
 
 class Human_Player(Player):
-    def get_action(self):
-        decision = input("What would you like to do? 'h' for Hit and 's' for Stand\n")
+    def get_action(self, ui):
+        decision = bt.get_input(0, 24,"What would you like to do? 'h' for Hit and 's' for Stand")
         match decision:
             case "h":
                 return "hit"
@@ -74,7 +75,7 @@ class Human_Player(Player):
                 return "stand"
         
 class CPU_Player(Player):
-    def get_action(self):
+    def get_action(self, ui):
         if len(self.hand) < 3:
             return "hit"
         elif sum(self.hand) > 30:

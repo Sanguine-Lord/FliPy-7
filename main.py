@@ -2,10 +2,12 @@ from game import *
 from player import *
 from cardeffects import *
 from roundmanager import run_round
+from blessedterm import *
 
 def main():
+    initialize()
     new_game = GameState(player_count=0, target_score=0, round_number=0, player_list={}, game_deck=Deck())
-    new_game.setup
+    new_game.setup()
     while True:     # LOOP 1 - Actual game loop, broken only on victory
         active_players = []
         new_game.game_deck.deck_check()  # check to ensure deck isn't empty

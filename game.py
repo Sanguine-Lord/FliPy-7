@@ -10,8 +10,8 @@ class GameState:
     round_number: int
     target_score: int
     game_deck: Deck
+    ui: UI = field(default_factory=UI)
     player_list: dict = field(default_factory=dict)
-    ui: UI
 
     def setup(self):
         player_type = 0

@@ -1,6 +1,7 @@
 from game import GameState
 from deck import *
 from player import *
+from UiManager import *
 
 def get_card_effect(game_state: GameState, player: Player):
     game_state.game_deck.deck_check()
@@ -12,7 +13,7 @@ def get_card_effect(game_state: GameState, player: Player):
         match top_card:
             case "F":
                 if isinstance(player, Human_Player) is True:
-                    target = f"player_{int(input("you've drawn a freeze! Please select a player to lock out of the round! (Enter Player No.)"))}"
+                    target = f"player_{game_state.ui.int_prompt("you've drawn a freeze! Please select a player to lock out of the round! (Enter Player No.)")}"
                 else:
                     active_players = [p for p in game_state.player_list.values() if p.round_active]
                     leader = max(active_players, key=lambda p: p.score) if active_players else None
@@ -20,7 +21,7 @@ def get_card_effect(game_state: GameState, player: Player):
                 freeze(game_state, target)
             case "D":
                 if isinstance(player, Human_Player) is True:
-                    target = f"player_{int(input("you've drawn a Draw-3! Please select a player to force to draw 3 cards! (Enter Player No.)"))}"
+                    target = f"player_{game_state.ui.int_prompt("you've drawn a Draw-3! Please select a player to force to draw 3 cards! (Enter Player No.)")}"
                 else:
                     if len(player.hand) <= 3:
                         target = player.player_name
@@ -30,25 +31,25 @@ def get_card_effect(game_state: GameState, player: Player):
                         target = leader.player_name
                 draw_3(game_state, target)
             case "S":
-                print("You've drawn a second chance! The next time you bust, this card will be consumed instead!")
+                game_state.ui.game_update("You've drawn a second chance! The next time you bust, this card will be consumed instead!", bt.term.white)
                 pass
             case "+2":
-                print("+2 points!")
+                game_state.ui.game_update("+2 points!", bt.term.white)
                 pass
             case "+4":
-                print("+4 points!")
+                game_state.ui.game_update("+4 points!", bt.term.white)
                 pass
             case "+6":
-                print("+6 points!")
+                game_state.ui.game_update("+6 points!", bt.term.white)
                 pass
             case "+8":
-                print("+8 points!")
+                game_state.ui.game_update("+8 points!", bt.term.white)
                 pass
             case "+10":
-                print("+10 points!")
+                game_state.ui.game_update("+10 points!", bt.term.white)
                 pass
             case "x2":
-                print("double points! This only applies to your normal score.")
+                game_state.ui.game_update("double points! This only applies to your normal score.", bt.term.cyan)
                 pass                                                    
                         
 def freeze(game_state: GameState, target: str):
@@ -64,7 +65,7 @@ def draw_3(game_state: GameState, target: str):
             case True: # player didn't bust, remains an active player
                 pass
             case False: # player bust, delete their current hand, remove them from the rest of the round and commiserate!
-                print("Unlucky! You've bust!")
+                game_state.ui.game_update("Unlucky! You've bust!", bt.term.red)
                 game_state.player_list[target].clear_hand(game_state.game_deck)
                 game_state.player_list[target].round_active = False
                 break     
